@@ -205,14 +205,6 @@ input {
   z-index: 1;
 }
 
-/*
-@media screen and (max-width: 800px) {
-  #calendarDiv {
-    width: 100vh;
-  }
-}
-*/
-
 #foot{
   /* da gre foot čez koledar */
   position: absolute;
