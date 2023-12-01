@@ -72,7 +72,6 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
             <div class="row">
                 <div class = "col-sm-8">
                     <input type="text" id="todo" placeholder="Naslov..." maxlength="60">
-                    <br>
                     <input type="date" id="date" placeholder="deadline">
                 </div>
                 <div id = "groups2" class = "col-sm-4">
