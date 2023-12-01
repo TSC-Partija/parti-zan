@@ -201,8 +201,12 @@ input {
   margin-left: 15%;
   position: absolute;
   width: 70%;
-  height: 130vh;
+  height: 150vh;
   z-index: 1;
+}
+
+#calendar{
+  height: 90%;
 }
 
 #foot{
