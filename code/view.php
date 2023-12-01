@@ -43,6 +43,17 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
             background-color: #f44300;
         }
     </style>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <script>
+    // to doda koledar iz full calendar API-ja
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth'
+        });
+        calendar.render();
+      });
+    </script>
 </head>
 
 <div id="myDIV" class="header container-fluid">
@@ -168,9 +179,11 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
 
     ?>
 </ul>
-
+<div id = "calendarDiv" class = "container-fluid">
+    <div id = "calendar"></div>
+</div>
 <!-- odstrani ta div če bo preveč praznga placa -->
-<div class = "container-fluid">
+<div id ="foot" class = "container-fluid">
     <h7 class="footer" style="margin-bottom: 35px" name="<?= $_SESSION['username'] ?>">Prijavljen kot: <?= $_SESSION['username'] ?></h7>
     <a class="footer" href="logout.php">ODJAVA</a>
 </div>

@@ -196,6 +196,30 @@ input {
   display: inline-block;
 }
 
+#calendarDiv{
+  margin-top: 8vh;
+  margin-left: 15%;
+  position: absolute;
+  width: 70%;
+  height: 130vh;
+  z-index: 1;
+}
+
+/*
+@media screen and (max-width: 800px) {
+  #calendarDiv {
+    width: 100vh;
+  }
+}
+*/
+
+#foot{
+  /* da gre foot čez koledar */
+  position: absolute;
+  z-index: 2;
+  height: 100%;
+}
+
 .nastavitve{
   cursor: pointer;
   width: 100%;
