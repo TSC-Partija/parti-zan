@@ -41,6 +41,7 @@ $servername = "localhost";
     $stmt->bind_param("s", $_SESSION['id']);
     $stmt->execute();
     $result = $stmt->get_result();
+    $results = array();
     if($result->num_rows > 0){
         while($row = $result->fetch_assoc()) {
             //var_dump($_SESSION['groupIds']);
@@ -50,16 +51,19 @@ $servername = "localhost";
                 $eventObj->start = $row["deadline"];
                 $eventObj->allDay = false;
                 if(true == $row['finished'] && $group == $row['groupid']){
-                    echo json_encode($eventObj);
-                    echo "/"; // zatu, da se pole splita po /
+                    array_push($results, $eventObj);
+                    //echo json_encode($eventObj);
+                    //echo "/"; // zatu, da se pole splita po /
                 }
                 else if(false == $row['finished'] && $group == $row['groupid']){
-                    echo json_encode($eventObj);
-                    echo "/";
+                    array_push($results, $eventObj);
+                    //echo json_encode($eventObj);
+                    //echo "/";
                 }
             }
         }
     }
     $conn->close();
     $stmt->close();
+    echo json_encode($results);
 ?>

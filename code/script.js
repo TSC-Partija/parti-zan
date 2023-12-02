@@ -182,41 +182,18 @@ window.addEventListener("click", (event) => {
 
 // koda za koledar
 // to doda koledar iz full calendar API-ja
-eventArray = [];
-const xmlhttp = new XMLHttpRequest();
-xmlhttp.onload = function(){
-  console.log("TU JE TU");
-  // dobimo vsa opravila/žure, da jih lahko prikažemo na koledarju
-  response = this.responseText;
-  response = response.substring(0, response.length-1);
-  console.log(response);
-
-  console.log("-----------------");
-  eventArray = (response.split("/"));
-  eventArray.forEach(element => {
-    console.log(element+"\n");
-    console.log("nov element");
-  });
-  console.log("TU JE BLU TU");
-}
-xmlhttp.open("GET","eventData.php")
-xmlhttp.send();
-document.addEventListener('DOMContentLoaded', function() {
-  var calendarEl = document.getElementById('calendar');
-  const calendar = new FullCalendar.Calendar(calendarEl, {
-  initialView: 'timeGridWeek',
-  events: [
-    {
-      title  : 'event1',
-      start  : '2023-12-03T12:35',
-      allDay : false // will make the time show
-    },
-    {
-      title  : 'event2',
-      start  : '2023-12-02T15:00',
-      allDay : false // will make the time show
-    }
-  ]
-  })
-  calendar.render();
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('eventData.php')
+    .then(response => response.json())
+    .then(data => {
+      console.log("HELPERINO");
+      console.log(data);
+      var calendarEl = document.getElementById('calendar');
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'timeGridWeek',
+        events: data
+      });
+      calendar.render();
+    })
+    .catch(error => console.error('Error fetching data:', error));
 });
