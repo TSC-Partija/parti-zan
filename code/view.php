@@ -44,17 +44,6 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
         }
     </style>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
-    <script>
-    // to doda koledar iz full calendar API-ja
-    
-      document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'timeGridWeek'
-        })
-        calendar.render();
-      });
-    </script>
 </head>
 
 <div id="myDIV" class="header container-fluid">
@@ -84,7 +73,7 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
             <div class="row">
                 <div class = "col-sm-8">
                     <input type="text" id="todo" placeholder="Naslov..." maxlength="60">
-                    <input type="date" id="date" placeholder="deadline">
+                    <input type="datetime-local" id="date" name="datetime" placeholder="deadline">
                 </div>
                 <div id = "groups2" class = "col-sm-4">
                     <select id="groups" class = "addSelect">

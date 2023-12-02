@@ -179,3 +179,34 @@ window.addEventListener("click", (event) => {
     }
   }
 });
+
+// koda za koledar
+// to doda koledar iz full calendar API-ja
+eventArray = [];
+const xmlhttp = new XMLHttpRequest();
+xmlhttp.onload = function(){
+  console.log("TU JE TU");
+  console.log(this.responseText);
+  console.log("TU JE BLU TU");
+}
+xmlhttp.open("GET","eventData.php")
+xmlhttp.send();
+document.addEventListener('DOMContentLoaded', function() {
+  var calendarEl = document.getElementById('calendar');
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+  initialView: 'timeGridWeek',
+  events: [
+    {
+      title  : 'event1',
+      start  : '2023-12-03T12:35:02',
+      allDay : false // will make the time show
+    },
+    {
+      title  : 'event2',
+      start  : '2023-12-02T15:00:00',
+      allDay : false // will make the time show
+    }
+  ]
+  })
+  calendar.render();
+});
