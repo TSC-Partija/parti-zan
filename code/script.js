@@ -2,11 +2,26 @@
 var myNodelist = document.getElementsByTagName("LI");
 var i;
 for (i = 0; i < myNodelist.length; i++) {
+  // gumb za odstranitev opravila
   var span = document.createElement("SPAN");
   var txt = document.createTextNode("\u00D7");
   span.className = "close";
   span.appendChild(txt);
   myNodelist[i].appendChild(span);
+
+  // shopping list
+  var shoppingBtn = document.createElement("SPAN");
+  shoppingBtn.className = "shoppingBtn";
+  var txt2 = document.createTextNode("SHOPPING");
+  shoppingBtn.appendChild(txt2);
+  myNodelist[i].appendChild(shoppingBtn);
+
+  // drink list
+  var drinkBtn = document.createElement("SPAN");
+  drinkBtn.className = "drinkBtn";
+  var txt3 = document.createTextNode("DRINK");
+  drinkBtn.appendChild(txt3);
+  myNodelist[i].appendChild(drinkBtn);
 }
 
 // Click on a close button to hide the current list item
@@ -162,6 +177,8 @@ function newElement() {
     }
   }
 }
+
+// za nastavitve
 var optionsButton = document.getElementById('options-button');
 var optionsWindow = document.getElementById('options-window');
 var createGroup = document.getElementById('skupina');
@@ -180,14 +197,48 @@ window.addEventListener("click", (event) => {
   }
 });
 
+// za shopping in drink seznam
+//shopping
+var shoppingWindow = document.getElementById("shopping-window");
+
+const shoppingButtons = Array.from(document.getElementsByClassName('shoppingBtn'));
+
+shoppingButtons.forEach(btn => {
+  btn.addEventListener('click', function handleClick(event) {
+    shoppingWindow.classList.toggle('show');
+  });
+});
+
+window.addEventListener("click", (event) => {
+  if (event.target !== shoppingWindow &&!shoppingButtons.some(button => event.target === button) && shoppingWindow.classList.contains("show")) {
+    shoppingWindow.classList.toggle('show');
+  }
+});
+
+//drink
+var drinkWindow = document.getElementById("drink-window");
+
+const drinkButtons = Array.from(document.getElementsByClassName('drinkBtn'));
+
+drinkButtons.forEach(btn => {
+  btn.addEventListener('click', function handleClick(event) {
+    drinkWindow.classList.toggle('show');
+  });
+});
+
+window.addEventListener("click", (event) => {
+  if (event.target !== drinkWindow &&!drinkButtons.some(button => event.target === button) && drinkWindow.classList.contains("show")) {
+    drinkWindow.classList.toggle('show');
+  }
+});
+
+
 // koda za koledar
 // to doda koledar iz full calendar API-ja
 document.addEventListener('DOMContentLoaded', function () {
   fetch('eventData.php')
     .then(response => response.json())
     .then(data => {
-      console.log("HELPERINO");
-      console.log(data);
       var calendarEl = document.getElementById('calendar');
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'timeGridWeek',

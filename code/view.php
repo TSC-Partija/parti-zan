@@ -54,13 +54,22 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
         height="60"
         width="70" />
         <div id="options-window">
-        <h2 id="options">NASTAVITVE</h2>
-        <hr/>
-        <a href="dodajSkupino.php"><p id="skupina" class="nastavitve">Ustvari skupino</p></a>
-        <a href="dodajvskupino.php"><p id="dodajskupina" class="nastavitve">Dodaj v skupino</p></a>
-        <a href="changePass.php"><p id="spremenigeslo" class="nastavitve">Spremeni geslo</p></a>
+            <h2 id="options">NASTAVITVE</h2>
+            <hr/>
+            <a href="dodajSkupino.php"><p id="skupina" class="nastavitve">Ustvari skupino</p></a>
+            <a href="dodajvskupino.php"><p id="dodajskupina" class="nastavitve">Dodaj v skupino</p></a>
+            <a href="changePass.php"><p id="spremenigeslo" class="nastavitve">Spremeni geslo</p></a>
         </div>
     <?php endif; ?>
+    <div id="shopping-window">
+        <h2 id="shopping-title">SHOPPING</h2>
+        <p style = "color:black">Deluvaaaaaaaaaaaaaaaaaaaaa!</p>
+    </div>
+
+    <div id="drink-window">
+        <h2 id="drink-title">DRINK</h2>
+        <p style = "color:black">Hajmo!</p>
+    </div>
     <img id = "logo"
     src="images/Parti-zan_logo.svg"
     alt="|||"

@@ -65,13 +65,55 @@ ul li.checked::before {
 .close {
   position: absolute;
   right: 0;
-  top: 0;
-  padding: 12px 16px 12px 16px
+  /* display: inline-block; */
+  top: 0.05vh;
+  padding: 10px 16px 12px 16px;
+  border: 1px solid black;
+}
+
+.shoppingBtn {
+  position: absolute;
+  /* display: inline-block; */
+  right: 25vh;
+  top: 0.05vh;
+  width: 10%;
+  height: 99%;
+  background: #d9d9d9;
+  color: #555;
+  text-align: center;
+  font-size: 16px; 
+  cursor: pointer;
+  transition: 0.3s;
+  border: 1px solid black;
+}
+
+.drinkBtn {
+  position: absolute;
+  /* display: inline-block; */
+  right: 7vh;
+  top: 0.05vh;
+  width: 10%;
+  height: 99%;
+  background: #d9d9d9;
+  color: #555;
+  text-align: center;
+  font-size: 16px; 
+  cursor: pointer;
+  transition: 0.3s;
+  border: 1px solid black;
 }
 
 .close:hover {
   background-color: #f44336;
   color: white;
+}
+
+.shoppingBtn:hover {
+  background-color: #bbb;
+}
+
+.drinkBtn:hover {
+  background-color: #bbb;
 }
 
 /* Style the header */
@@ -181,6 +223,48 @@ input {
 }
 
 #options{
+  color: black;
+}
+
+#shopping-window {
+  position: fixed;
+  right: -300px;
+  top: 0;
+  bottom: 0;
+  width: 300px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  transition: right 0.5s ease;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+#shopping-window.show {
+  right: 0;
+}
+
+#shopping-title{
+  color: black;
+}
+
+#drink-window {
+  position: fixed;
+  right: -300px;
+  top: 0;
+  bottom: 0;
+  width: 300px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  transition: right 0.5s ease;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+#drink-window.show {
+  right: 0;
+}
+
+#drink-title{
   color: black;
 }
 
