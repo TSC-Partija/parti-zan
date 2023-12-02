@@ -155,11 +155,12 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
         while($row = $result->fetch_assoc()) {
             //var_dump($_SESSION['groupIds']);
             foreach($_SESSION['groupIds'] as $group){
+                $rowDate = str_replace("T", " ", $row['deadline']);
                 if(true == $row['finished'] && $group == $row['groupid']){
-                    echo "<li id=\"" . $row['id'] . "\" class=checked><b style=\"text-transform: uppercase;\">" . $row['todo'] . "</b>&nbsp&nbspSkupina: " . $row['name'] . "&nbsp&nbspKončaj do: " . $row['deadline'] . "</li>";
+                    echo "<li id=\"" . $row['id'] . "\" class=checked><b style=\"text-transform: uppercase;\">" . $row['todo'] . "</b>&nbsp&nbspSkupina: " . $row['name'] . "&nbsp&nbspKončaj do: " . $rowDate . "</li>";
                 }
                 else if(false == $row['finished'] && $group == $row['groupid']){
-                    echo "<li id=\"" . $row['id'] . "\"><b style=\"text-transform: uppercase;\">" . $row['todo'] . "</b>&nbsp&nbspSkupina: " . $row['name'] . "&nbsp&nbspKončaj do: " . $row['deadline'] . "</li>";
+                    echo "<li id=\"" . $row['id'] . "\"><b style=\"text-transform: uppercase;\">" . $row['todo'] . "</b>&nbsp&nbspSkupina: " . $row['name'] . "&nbsp&nbspKončaj do: " . $rowDate . "</li>";
                 }
             }
         }

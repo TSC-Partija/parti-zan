@@ -14,6 +14,14 @@ if (isset($_SESSION['expire_time']) && time() > $_SESSION['expire_time']) {
     header("Location: index.php");
     exit;
 }
+
+class EventData {
+    // Properties
+    public $title;
+    public $start;
+    public $allDay;
+  }
+
 $servername = "localhost";
     $user = "root";
     $pass = "";
@@ -37,11 +45,17 @@ $servername = "localhost";
         while($row = $result->fetch_assoc()) {
             //var_dump($_SESSION['groupIds']);
             foreach($_SESSION['groupIds'] as $group){
+                $eventObj = new EventData();
+                $eventObj->title = $row["todo"];
+                $eventObj->start = $row["deadline"];
+                $eventObj->allDay = false;
                 if(true == $row['finished'] && $group == $row['groupid']){
-                    echo "ID: " . $row['id'] .  "task: " . $row['todo'] . "name: " . $row['name'] . "deadline: " . $row['deadline'] . "\n";
+                    echo json_encode($eventObj);
+                    echo "/"; // zatu, da se pole splita po /
                 }
                 else if(false == $row['finished'] && $group == $row['groupid']){
-                    echo "ID: " . $row['id'] .  "task: " . $row['todo'] . "name: " . $row['name'] . "deadline: " . $row['deadline'] . "\n";
+                    echo json_encode($eventObj);
+                    echo "/";
                 }
             }
         }

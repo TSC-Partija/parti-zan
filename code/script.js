@@ -186,7 +186,17 @@ eventArray = [];
 const xmlhttp = new XMLHttpRequest();
 xmlhttp.onload = function(){
   console.log("TU JE TU");
-  console.log(this.responseText);
+  // dobimo vsa opravila/žure, da jih lahko prikažemo na koledarju
+  response = this.responseText;
+  response = response.substring(0, response.length-1);
+  console.log(response);
+
+  console.log("-----------------");
+  eventArray = (response.split("/"));
+  eventArray.forEach(element => {
+    console.log(element+"\n");
+    console.log("nov element");
+  });
   console.log("TU JE BLU TU");
 }
 xmlhttp.open("GET","eventData.php")
@@ -198,12 +208,12 @@ document.addEventListener('DOMContentLoaded', function() {
   events: [
     {
       title  : 'event1',
-      start  : '2023-12-03T12:35:02',
+      start  : '2023-12-03T12:35',
       allDay : false // will make the time show
     },
     {
       title  : 'event2',
-      start  : '2023-12-02T15:00:00',
+      start  : '2023-12-02T15:00',
       allDay : false // will make the time show
     }
   ]
