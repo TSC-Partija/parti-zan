@@ -237,6 +237,7 @@ input {
   transition: right 0.5s ease;
   overflow-y: auto;
   z-index: 10;
+  color: black;
 }
 
 #shopping-window.show {

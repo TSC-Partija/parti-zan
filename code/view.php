@@ -24,6 +24,7 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
     <title>Moja Opravila</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="style.css" rel="stylesheet">
     <style>
         *{
@@ -63,7 +64,10 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
     <?php endif; ?>
     <div id="shopping-window">
         <h2 id="shopping-title">SHOPPING</h2>
-        <p style = "color:black">Deluvaaaaaaaaaaaaaaaaaaaaa!</p>
+        <input type="text" id="shopping" placeholder="Izdelki..." maxlength="60" style="width: 100%">
+        <span onclick="newShoppingElement()" class="addBtn" style="width: 100%">Dodaj</span>
+        <ul id="shoppingUl">
+        </ul>
     </div>
 
     <div id="drink-window">
@@ -179,6 +183,11 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
 
     ?>
 </ul>
+<?php
+        if(isset($_SESSION["error"])){
+            echo $_SESSION["error"];
+        }
+        ?>
 <div id = "calendarDiv" class = "container-fluid">
     <div id = "calendar"></div>
 </div>

@@ -12,6 +12,7 @@ for (i = 0; i < myNodelist.length; i++) {
   // shopping list
   var shoppingBtn = document.createElement("SPAN");
   shoppingBtn.className = "shoppingBtn";
+  shoppingBtn.id = myNodelist[i].getAttribute("id");
   var txt2 = document.createTextNode("SHOPPING");
   shoppingBtn.appendChild(txt2);
   myNodelist[i].appendChild(shoppingBtn);
@@ -19,6 +20,7 @@ for (i = 0; i < myNodelist.length; i++) {
   // drink list
   var drinkBtn = document.createElement("SPAN");
   drinkBtn.className = "drinkBtn";
+  drinkBtn.id = myNodelist[i].getAttribute["id"];
   var txt3 = document.createTextNode("DRINK");
   drinkBtn.appendChild(txt3);
   myNodelist[i].appendChild(drinkBtn);
@@ -206,13 +208,61 @@ const shoppingButtons = Array.from(document.getElementsByClassName('shoppingBtn'
 shoppingButtons.forEach(btn => {
   btn.addEventListener('click', function handleClick(event) {
     shoppingWindow.classList.toggle('show');
+    global_zur_id = btn.getAttribute("id");
+    console.log(global_zur_id);
   });
 });
-
+var global_zur_id = -1;
 window.addEventListener("click", (event) => {
-  if (event.target !== shoppingWindow &&!shoppingButtons.some(button => event.target === button) && shoppingWindow.classList.contains("show")) {
-    shoppingWindow.classList.toggle('show');
+
+  let numb = shoppingWindow.childNodes;
+  //console.log(event.target);
+  for(let i = 0; i < numb.length; i++){
+    //console.log(numb[i]);
+    if (event.target !== shoppingWindow && 
+      !shoppingWindow.contains(event.target) && event.target !== numb[i] &&!shoppingButtons.some(button => event.target === button) && shoppingWindow.classList.contains("show")) {
+      shoppingWindow.classList.toggle('show');
+    }
   }
+
+  if(shoppingWindow.classList.contains("show") && !shoppingWindow.contains(event.target)){
+    document.getElementById("shoppingUl").innerHTML = "";
+    // Your data to be sent to PHP
+    const data = {
+      id: global_zur_id
+    };
+
+    fetch('loadShoppingElements.php', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(result => {
+      // Handle response from PHP
+      console.log(result);
+      let ul = document.getElementById("shoppingUl");
+      result.forEach(function(item) {
+        var li = document.createElement("li");
+        var inputValue = item.seznam;
+        var t = document.createTextNode(inputValue);
+        li.appendChild(t);
+        ul.appendChild(li);
+        // Perform other operations as needed
+    });
+    })
+    .catch(error => {
+      console.error('There was a problem with the fetch operation:', error);
+    });
+  }
+  
 });
 
 //drink
@@ -248,3 +298,42 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch(error => console.error('Error fetching data:', error));
 });
+
+function newShoppingElement() {
+  var li = document.createElement("li");
+  var inputValue = document.getElementById("shopping").value;
+  var t = document.createTextNode(inputValue);
+  li.appendChild(t);
+  if (inputValue === '') {
+    alert("Izpolni vsa polja!");
+  }
+  else{
+    if(global_zur_id >= 0){
+      document.getElementById("shoppingUl").appendChild(li);
+      document.getElementById("shopping").value = "";
+        let data = {
+            name: inputValue,
+            id: global_zur_id
+        }
+
+        // Create a new XMLHttpRequest object
+        let xhr = new XMLHttpRequest();
+
+        // Set the request URL and method
+        xhr.open("POST", "addShoppingElement.php");
+
+        // Set the request header to indicate the data type
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+        // Define a callback function to handle the server's response
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log(xhr.response);
+            }
+        };
+
+        // Convert the data to a JSON string and send it to the server
+        xhr.send(JSON.stringify(data));
+    }
+  }
+}
