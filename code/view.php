@@ -64,7 +64,7 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
         </div>
     <?php endif; ?>
     <div id="shopping-window">
-        <h2 id="shopping-title">SHOPPING</h2>
+        <h2 id="shopping-title" style="vertical-align: baseline">SHOPPING</h2><img src="images/shopping-cart.png" style="height:50px">
         <input type="text" id="shopping" placeholder="Izdelki..." maxlength="60" style="width: 100%" onkeypress="handleKeyPressShop(event)">
         <span onclick="newShoppingElement()" class="addBtn" style="width: 100%">Dodaj</span>
         <ul id="shoppingUl">
