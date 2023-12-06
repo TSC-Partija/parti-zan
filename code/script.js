@@ -9,10 +9,11 @@ for (i = 0; i < myNodelist.length; i++) {
   span.appendChild(txt);
   myNodelist[i].appendChild(span);
 
+  var a = myNodelist[i].getAttribute("id");
   // shopping list
   var shoppingBtn = document.createElement("SPAN");
   shoppingBtn.className = "shoppingBtn";
-  shoppingBtn.id = myNodelist[i].getAttribute("id");
+  shoppingBtn.id = a;
   var txt2 = document.createTextNode("SHOPPING");
   shoppingBtn.appendChild(txt2);
   myNodelist[i].appendChild(shoppingBtn);
@@ -20,7 +21,7 @@ for (i = 0; i < myNodelist.length; i++) {
   // drink list
   var drinkBtn = document.createElement("SPAN");
   drinkBtn.className = "drinkBtn";
-  drinkBtn.id = myNodelist[i].getAttribute["id"];
+  drinkBtn.id = a;
   var txt3 = document.createTextNode("DRINK");
   drinkBtn.appendChild(txt3);
   myNodelist[i].appendChild(drinkBtn);
@@ -137,32 +138,27 @@ function newElement() {
   if (inputValue === '' && dateInput === '') {
     alert("Izpolni vsa polja!");
   } else {
+
     //document.getElementById("myUL").appendChild(li);
-    
-    let data = {
-      toDo: inputValue,
-      groupId: selectedGroup,
-      deadline: dateValue
-    }
-    
+
+    // Dodamo podatke k URL-ju
+    let url = `add.php?toDo=${encodeURIComponent(inputValue)}&groupId=${encodeURIComponent(selectedGroup)}&deadline=${encodeURIComponent(dateValue)}`;
+
     // Create a new XMLHttpRequest object
     let xhr = new XMLHttpRequest();
 
     // Set the request URL and method
-    xhr.open("POST", "add.php");
-
-    // Set the request header to indicate the data type
-    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhr.open("GET", url);
 
     // Define a callback function to handle the server's response
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (xhr.status === 200) {
             location.reload();
         }
     };
 
-    // Convert the data to a JSON string and send it to the server
-    xhr.send(JSON.stringify(data));
+    // Send the GET request
+    xhr.send();
   }
   document.getElementById("todo").value = "";
 
@@ -231,6 +227,7 @@ window.addEventListener("click", (event) => {
     const data = {
       id: global_zur_id
     };
+    //console.log(data);
 
     fetch('loadShoppingElements.php', {
       method: 'POST',
@@ -243,6 +240,7 @@ window.addEventListener("click", (event) => {
       if (!response.ok) {
           throw new Error('Network response was not ok');
       }
+      console.log(response);
       return response.json();
     })
     .then(result => {
@@ -266,19 +264,73 @@ window.addEventListener("click", (event) => {
 });
 
 //drink
-var drinkWindow = document.getElementById("drink-window");
+var drinkingWindow = document.getElementById("drink-window");
 
-const drinkButtons = Array.from(document.getElementsByClassName('drinkBtn'));
+const drinkingButtons = Array.from(document.getElementsByClassName('drinkBtn'));
 
-drinkButtons.forEach(btn => {
+drinkingButtons.forEach(btn => {
   btn.addEventListener('click', function handleClick(event) {
-    drinkWindow.classList.toggle('show');
+    drinkingWindow.classList.toggle('show');
+    global_zur_id = btn.getAttribute("id");
+    console.log(global_zur_id);
   });
 });
-
+var global_zur_id = -1;
 window.addEventListener("click", (event) => {
-  if (event.target !== drinkWindow &&!drinkButtons.some(button => event.target === button) && drinkWindow.classList.contains("show")) {
+  /*
+  if (event.target !== drinkWindow && !drinkButtons.some(button => event.target === button) && drinkWindow.classList.contains("show")) {
     drinkWindow.classList.toggle('show');
+  }
+*/
+  let numb = drinkingWindow.childNodes;
+  //console.log(event.target);
+  for(let i = 0; i < numb.length; i++){
+    //console.log(numb[i]);
+    if (event.target !== drinkingWindow && 
+      !drinkingWindow.contains(event.target) && event.target !== numb[i] &&!drinkingButtons.some(button => event.target === button) && drinkingWindow.classList.contains("show")) {
+      drinkingWindow.classList.toggle('show');
+    }
+  }
+
+  if(drinkingWindow.classList.contains("show") && !drinkingWindow.contains(event.target)){
+    document.getElementById("drinkingUl").innerHTML = "";
+    // Your data to be sent to PHP
+    const data = {
+      id: global_zur_id
+    };
+    //console.log(data);
+
+    fetch('loadDrinkingElements.php?' + new URLSearchParams(data), {
+      method: 'GET',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      //body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+      //console.log(response);
+      return response.json();
+    })
+    .then(result => {
+      // Handle response from PHP
+      console.log(result);
+      let ul = document.getElementById("drinkingUl");
+      result.forEach(function(item) {
+        var li = document.createElement("li");
+        var inputValue = item.seznam;
+        var t = document.createTextNode(inputValue);
+        li.appendChild(t);
+        ul.appendChild(li);
+        // Perform other operations as needed
+    });
+    })
+    .catch(error => {
+      //console.log(result);
+      console.error('There was a problem with the fetch operation:', error);
+    });
   }
 });
 
@@ -335,5 +387,73 @@ function newShoppingElement() {
         // Convert the data to a JSON string and send it to the server
         xhr.send(JSON.stringify(data));
     }
+  }
+}
+
+function newDrinkElement() {
+  var li = document.createElement("li");
+  var inputValue = document.getElementById("drinking").value;
+  var t = document.createTextNode(inputValue);
+  li.appendChild(t);
+  if (inputValue === '') {
+    alert("Izpolni vsa polja!");
+  }
+  else{
+    if(global_zur_id >= 0){
+      document.getElementById("drinkingUl").appendChild(li);
+      document.getElementById("drinking").value = "";
+        let data = {
+            name: inputValue,
+            id: global_zur_id
+        }
+
+        // Create a new XMLHttpRequest object
+        let xhr = new XMLHttpRequest();
+
+        // Set the request URL and method
+        xhr.open("POST", "addDrinkingElement.php");
+
+        // Set the request header to indicate the data type
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+        // Define a callback function to handle the server's response
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                console.log(xhr.response);
+            }
+        };
+
+        // Convert the data to a JSON string and send it to the server
+        xhr.send(JSON.stringify(data));
+    }
+  }
+}
+
+//handla da z enter dodas vpisano v seznam
+function handleKeyPressDrink(event) {
+  // Pridobi tip dogodka
+  var key = event.which || event.keyCode;
+
+  // Preveri, ali je pritisnjen Enter (tipke z vrednostjo 13)
+  if (key === 13) {
+      // Prepreči običajno obnašanje tipke Enter (npr. pošiljanje obrazca)
+      event.preventDefault();
+
+      // Pokliči funkcijo za dodajanje elementa
+      newDrinkElement();
+  }
+}
+
+function handleKeyPressShop(event) {
+  // Pridobi tip dogodka
+  var key = event.which || event.keyCode;
+
+  // Preveri, ali je pritisnjen Enter (tipke z vrednostjo 13)
+  if (key === 13) {
+      // Prepreči običajno obnašanje tipke Enter (npr. pošiljanje obrazca)
+      event.preventDefault();
+
+      // Pokliči funkcijo za dodajanje elementa
+      newShoppingElement();
   }
 }

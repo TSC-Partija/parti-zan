@@ -1,4 +1,5 @@
 <?php
+if(isset($_SESSION["error"]))unset($_SESSION["error"]);
 $sess_expiration = 900;
 session_set_cookie_params($sess_expiration);
 ini_set('session.gc_maxlifetime', $sess_expiration);
@@ -21,7 +22,7 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
 
 <!DOCTYPE html>
 <head>
-    <title>Moja Opravila</title>
+    <title>Parti-zan</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -64,7 +65,7 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
     <?php endif; ?>
     <div id="shopping-window">
         <h2 id="shopping-title">SHOPPING</h2>
-        <input type="text" id="shopping" placeholder="Izdelki..." maxlength="60" style="width: 100%">
+        <input type="text" id="shopping" placeholder="Izdelki..." maxlength="60" style="width: 100%" onkeypress="handleKeyPressShop(event)">
         <span onclick="newShoppingElement()" class="addBtn" style="width: 100%">Dodaj</span>
         <ul id="shoppingUl">
         </ul>
@@ -72,7 +73,15 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
 
     <div id="drink-window">
         <h2 id="drink-title">DRINK</h2>
-        <p style = "color:black">Hajmo!</p>
+        <input type="text" id="drinking" placeholder="Pijače..." maxlength="60" style="width: 100%" onkeypress="handleKeyPressDrink(event)">
+        <span onclick="newDrinkElement()" class="addBtn" style="width: 100%">Dodaj</span>
+        <ul id="drinkingUl" style="color:black">
+        </ul>
+        <?php
+        //if (isset($_SESSION["data"]) && $_SESSION["data"] != NULL){
+        //    echo ($_SESSION["data"]);
+        //}
+        ?>
     </div>
     <img id = "logo"
     src="images/Parti-zan_logo.svg"
@@ -81,7 +90,7 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
     width="70" />
 </div>
 <div id = "taskDiv" class = "container-fluid">
-    <h2 style="margin:5px;">Moja Opravila</h2>
+    <h2 style="margin:5px;">Moji Žuri</h2>
         <?php if($_SESSION['username'] != "guest"): ?>
             <div class="row">
                 <div class = "col-sm-8">
@@ -132,6 +141,7 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
                 <?php
                     if(isset($_SESSION['error'])){
                         echo("<p style=\"color: red; background-color: white; width: max-content\">Vnesi vse podatke!</p>");
+                        echo $_SESSION["error"];
                         unset($_SESSION['error']);
                     }
                     ?>
