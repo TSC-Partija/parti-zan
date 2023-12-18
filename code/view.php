@@ -45,7 +45,7 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
 </head>
 
-<div id="myDIV" class="header container-fluid">
+<div id="myDIV" class="header">
     <?php if($_SESSION['username'] != "guest"): ?>
         <img id = "options-button"
         src="images/sickIkonca.svg"
@@ -83,8 +83,8 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
     <img id = "logo"
     src="images/Parti-zan_logo.svg"
     alt="|||"
-    height="60"
-    width="70" />
+    height="90"
+    width="100" />
 </div>
 <div id = "taskDiv" class = "container-fluid">
     <h2 style="margin:5px;">Moji Žuri</h2>

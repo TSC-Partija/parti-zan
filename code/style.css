@@ -123,8 +123,9 @@ ul li.checked::before {
 
 /* Style the header */
 .header {
-  background-color: #bf2126;
+  background-color: #010101 ;
   padding: 25px;
+  padding-bottom: 65px;
   color: white;
   text-align: center;
   /*border: 3px solid black;*/
@@ -189,15 +190,10 @@ input {
 }
 
 #logo{
-  margin-top: 1vh;
+  margin-top: 2vh;
   padding-bottom: 0.7vh;
   padding-top: 0.7vh;
-  padding-right: 0.3vh;
-  padding-left: 0.3vh;
-  border: 1px solid white;
-  border-radius: 2px;
   transform: translateY(-50%);
-  background-color: #000;
 }
 
 #options-button:hover{
