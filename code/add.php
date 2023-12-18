@@ -11,27 +11,16 @@ if (!isset($_SESSION['id'])) {
     header("Location: view.php?error=Error:%20User%20not%20logged%20in");
     exit();
 }
-
-// Read the request data from the input stream
-$input = file_get_contents('php://input');
-
-// Convert the JSON string to a PHP object
-$data = json_decode($input);
-
-// Check if the JSON decoding was successful
-if ($data === null) {
-    header("Location: view.php?error=Error:%20Invalid%20input%20data");
-    exit();
-}
-
-// Access the data fields
-$todo = $data->toDo;
-$groupId = $data->groupId;
-$deadline = $data->deadline;
 $owner = intval($_SESSION['id']);
+
+
+$todo = isset($_GET['toDo']) ? $_GET['toDo'] : null;
+$groupId = isset($_GET['groupId']) ? $_GET['groupId'] : null;
+$deadline = isset($_GET['deadline']) ? $_GET['deadline'] : null;
+
 $finished = 0;
 
-if(isset($todo) && $todo != "" && isset($groupId) && $groupId != "" && isset($deadline) && $deadline != "" && $owner != "" && isset($finished) && $finished != ""){
+if(isset($todo) && $todo != "" && isset($groupId) && $groupId != "" && isset($deadline) && $deadline != "" && $owner != 0){
     // Create a new MySQLi object
     $servername = "localhost";
     $user = "root";
@@ -46,18 +35,42 @@ if(isset($todo) && $todo != "" && isset($groupId) && $groupId != "" && isset($de
     }
 
     // Prepare and bind the insert query
-
     $groupId = intval($groupId);
-    $stmt = "INSERT INTO todo (owner, todo, finished, deadline, group_id) VALUES ($owner, \"$todo\", $finished, \"$deadline\", $groupId)";
+    
+    echo "test";
 
+        // Predpostavljamo, da so spremenljivke $owner, $todo, $finished, $deadline, $groupId že definirane
+    $stmt = $conn->prepare("INSERT INTO todo (owner, todo, finished, deadline, group_id) VALUES (?, ?, ?, ?, ?)");
 
-    // Execute the query
-    mysqli_query($conn, $stmt);
+    // Preverite, ali je priprava poizvedbe uspela
+    if ($stmt === false) {
+        $_SESSION["error"] = "Priprava poizvedbe ni uspela.";
+        header("Location: err.php");
+        exit();
+    }
+
+    // Bind parameters
+    $stmt->bind_param("isisi", $owner, $todo, $finished, $deadline, $groupId);
+
+    // Izvrši poizvedbo
+    $stmt->execute();
+    echo "jajajajasjdakdjlsadlsk";
+    // Preveri, ali je bilo vstavljanje uspešno
+    if ($stmt->affected_rows > 0) {
+        echo "dela";
+        // Vstavljanje je bilo uspešno
+        $_SESSION['error'] = "Podatki so bili uspešno vstavljeni.";
+    } else {
+        // Vstavljanje ni uspelo
+        echo "blabla";
+        $_SESSION['error'] = "Vstavljanje podatkov ni uspelo.";
+    }
 
     // Close the statement and connection
     $conn->close();
 }
 else{
+    echo "bruh";
     $_SESSION['error'] = "Vneseni niso vsi podatki!";
 }
 
