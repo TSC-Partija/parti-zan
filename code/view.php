@@ -27,21 +27,18 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="style.css" rel="stylesheet">
     <style>
-        *{
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-        }
         .footer {
             position: fixed;
             bottom: 0;
             width: 100%;
-            background-color: #f44336;
+            background-color: #bf2126;
             padding: 10px;
             color: white;
             text-decoration: none;
             text-align: center;
             }
         a.footer:hover{
-            background-color: #f44300;
+            background-color: #d8a528;
         }
     </style>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>

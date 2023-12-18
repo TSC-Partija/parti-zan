@@ -1,5 +1,9 @@
+@font-face {
+  font-family: MavenPro;
+  src: url("fonts/MavenPro-VariableFont_wght.ttf") format('truetype');
+}
 *{
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: MavenPro;
 }
 .login-container {
     margin: 0 auto;
@@ -27,7 +31,7 @@
   }
   
   button[type=submit] {
-    background-color: #f44336;
+    background-color: #bf2126;
     color: white;
     border: none;
     border-radius: 5px;
@@ -37,7 +41,7 @@
   }
   
 button:hover {
-    background-color: #f44300;
+    background-color: #d8a528 ;
   }
 
 .main-div{
