@@ -136,8 +136,9 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
                     
                 <span onclick="newElement()" class="addBtn">Dodaj</span>
                 <?php
+                    
                     if(isset($_SESSION['error'])){
-                        echo("<p style=\"color: red; background-color: white; width: max-content\">Vnesi vse podatke!</p>");
+                        echo("<p style=\"color: red; background-color: white; width: max-content; margin-left: 40px\">Vnesi vse podatke!</p>");
                         echo $_SESSION["error"];
                         unset($_SESSION['error']);
                     }

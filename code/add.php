@@ -57,9 +57,8 @@ if(isset($todo) && $todo != "" && isset($groupId) && $groupId != "" && isset($de
     echo "jajajajasjdakdjlsadlsk";
     // Preveri, ali je bilo vstavljanje uspešno
     if ($stmt->affected_rows > 0) {
-        echo "dela";
         // Vstavljanje je bilo uspešno
-        $_SESSION['error'] = "Podatki so bili uspešno vstavljeni.";
+        echo "dela";
     } else {
         // Vstavljanje ni uspelo
         echo "blabla";

@@ -26,6 +26,18 @@
         /*
         $sql = "SELECT todo_group.name, todo_group.id as groupid, todo.id, todo.todo, todo.finished, todo.deadline FROM `pripada` inner join todo_group on (pripada.group_id = todo_group.id) inner join todo on (todo_group.id = todo.group_id) where user_id = \"" . $_SESSION['id'] . "\"";
         $result = $conn->query($sql);*/
+        $sql = "delete from spil where zur_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $sql = "delete from shopping where todo_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
         $sql = "delete from todo where id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id);

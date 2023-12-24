@@ -55,7 +55,7 @@ if(isset($id) && $id != ""){
 
     if ($stmt->affected_rows > 0) {
         // Insertion successful
-        $_SESSION['error'] = "Data inserted successfully.";
+        echo"juhuhu4";
     } else {
         // Insertion failed
         $_SESSION['error'] = "Failed to insert data.";
