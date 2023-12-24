@@ -5,9 +5,13 @@ function register(){
         $username = $_POST['username'];
         $password = $_POST['password'];
         $email = $_POST['email'];
-
+        $gender = "A";
+        if(isset($_POST['gender'])){
+            $gender = $_POST['gender'];
+        }
+        $weight = $_POST['weight'];
         // Check if the credentials are valid
-        if (isset($username) && $username != "" && isset($password) && $password != "" && isset($email) && $email != "") {
+        if (isset($username) && $username != "" && isset($password) && $password != "" && isset($email) && $email != "" && isset($gender) && $gender != "" && isset($weight) && $weight != "") {
             // TODO: adding a new user to the database
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -34,7 +38,7 @@ function register(){
                 }
             // Prepare and bind the insert query
             $id = rand(750, 255555);
-            $stmt = "INSERT INTO user (id, username, email, password) VALUES ($id, '$username', '$email', '$password')";
+            $stmt = "INSERT INTO user (id, username, email, password, gender, weight) VALUES ($id, '$username', '$email', '$password', '$gender', '$weight')";
 
             // Execute the query
             mysqli_query($conn, $stmt);
