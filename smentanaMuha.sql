@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gostitelj: 127.0.0.1
--- Čas nastanka: 24. dec 2023 ob 16.32
+-- Čas nastanka: 24. dec 2023 ob 18.32
 -- Različica strežnika: 10.4.28-MariaDB
 -- Različica PHP: 8.2.4
 
@@ -51,9 +51,11 @@ INSERT INTO `pripada` (`user_id`, `group_id`) VALUES
 (22303, 1),
 (22303, 24871),
 (22303, 69346),
+(51424, 24871),
 (100410, 24871),
 (100410, 136968),
-(142833, 24871);
+(142833, 24871),
+(152416, 24871);
 
 -- --------------------------------------------------------
 
@@ -112,23 +114,6 @@ CREATE TABLE `spil` (
 --
 -- Odloži podatke za tabelo `spil`
 --
-
-INSERT INTO `spil` (`id`, `id_pijanca`, `datum`, `seznam`, `zur_id`) VALUES
-(1, 1, '2023-11-20', 'slemer, marsal, skif', 31),
-(2, 3, '0', 'pir', 31),
-(3, 3, '0', 'scanje', 31),
-(4, 3, '0', 'scanje3', 31),
-(5, 3, '0', 'tset', 31),
-(6, 3, '0', 'test', 31),
-(7, 3, '0', 'test1', 31),
-(8, 3, '0', 'test3', 31),
-(9, 3, '0', 'koncno', 38),
-(10, 1, '0', 'vinu', 33),
-(11, 3, '0', 'kuhancek', 33),
-(12, 142833, '0', 'pir', 31),
-(13, 142833, '0', 'snopc', 31),
-(14, 142833, '0', 'vinu', 31),
-(15, 142833, '0', 'hruska 45', 41);
 
 -- --------------------------------------------------------
 
@@ -211,8 +196,10 @@ INSERT INTO `user` (`id`, `username`, `email`, `password`, `gender`, `weight`) V
 (4, 'guest', 'none@mail.domain', 'guest', 'M', 90),
 (11699, 'janez_selski', 'selski_janez@example.com', 'g', 'M', 55),
 (22303, 'hejhoj', 'test@test.com', 'geslo', 'M', 82),
+(51424, 'zjena', 'zjena@gmail.com', 'zjena', 'Z', 40),
 (100410, 'aghaha', 'matijakeber437@gmail.com', 'geslo', 'Z', 89),
-(142833, 'majstr', 'majstr@gmail.com', 'g', 'M', 93);
+(142833, 'majstr', 'majstr@gmail.com', 'g', 'M', 93),
+(152416, 'mwz', 'mwz@gmail.com', 'mwz', 'M', 95);
 
 --
 -- Indeksi zavrženih tabel
@@ -270,7 +257,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT tabele `shopping`
 --
 ALTER TABLE `shopping`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT tabele `spil`
@@ -282,7 +269,7 @@ ALTER TABLE `spil`
 -- AUTO_INCREMENT tabele `todo`
 --
 ALTER TABLE `todo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT tabele `todo_group`
@@ -294,7 +281,7 @@ ALTER TABLE `todo_group`
 -- AUTO_INCREMENT tabele `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142834;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=152417;
 
 --
 -- Omejitve tabel za povzetek stanja

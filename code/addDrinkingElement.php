@@ -49,9 +49,11 @@ if(isset($name) && $name != "" && isset($id) && $id != ""){
 
     $intid = intval($id);
     $finished = 0;
-    $stmt = $conn->prepare("INSERT INTO `spil` (`id_pijanca`, `zur_id`, `datum`, `seznam`) VALUES (?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO `spil` (`id_pijanca`, `zur_id`, `datum`, `seznam`, `drink_date`) VALUES (?, ?, ?, ?, ?)");
 
-    $stmt->bind_param("iiis", $_SESSION["id"], $intid, $finished, $name);
+    // date('Y-m-d H:i:s') --> potrebujemo čas, ko je uporabnik spil pijačo --> to je za izračun količine alkohola v krvi
+    $current_time = date('Y-m-d H:i:s');
+    $stmt->bind_param("iiiss", $_SESSION["id"], $intid, $finished, $name, $current_time);
     $stmt->execute();
 
     if ($stmt->affected_rows > 0) {
