@@ -53,14 +53,6 @@ if(isset($id) && $id != ""){
     $stmt->bind_param("ii", $intid, $_SESSION["id"]);
     $stmt->execute();
 
-    if ($stmt->affected_rows > 0) {
-        // Insertion successful
-        echo"juhuhu4";
-    } else {
-        // Insertion failed
-        $_SESSION['error'] = "Failed to insert data.";
-    }
-
     /// Get the result
     $result = $stmt->get_result();
 
