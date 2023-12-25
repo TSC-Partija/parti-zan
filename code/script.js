@@ -320,6 +320,7 @@ window.addEventListener("click", (event) => {
       let ul = document.getElementById("drinkingUl");
       result.forEach(function(item) {
         var li = document.createElement("li");
+        li.classList.add("drinkingLi");
         var inputValue = item.seznam;
         var t = document.createTextNode(inputValue);
         li.appendChild(t);
@@ -351,8 +352,8 @@ document.addEventListener('DOMContentLoaded', function () {
     .catch(error => console.error('Error fetching data:', error));
   var bubbles = document.querySelectorAll(".container .borderbox .glass .inner .bubble");
   bubbles.forEach(function (bubble, index) {
-    bubble.style.setProperty('--delay' + (index + 1), Math.random() * (10 + 0.2) +'s');
-    bubble.style.setProperty('--position' + (index + 1), Math.random() * (100 + 100) +'px');
+    bubble.style.setProperty('--delay' + (index + 1), Math.random() * (15-0.6) + 0.6 +'s');
+    bubble.style.setProperty('--position' + (index + 1), Math.random() * (145-(145-(1+index*12))) + (1+index*12) +'px');
   });
 });
 
@@ -551,6 +552,41 @@ function newDrinkElement() {
     var BAC = calculateBAC(drinks, wAndG);
     console.log("BAC FINAL: "+BAC);
     var warning = document.getElementById("warning");
+    // spremenimo nivo pive glede na BAC
+    var beer = document.getElementById("beer");
+    if(BAC == 0){
+      beer.style.marginTop = "260px";
+      beer.style.borderTop = "0px  solid white";
+    }
+    else if(BAC < 0.03){
+      beer.style.marginTop = "212px";
+      beer.style.borderTop = "8px  solid white";
+    }
+    else if(BAC < 0.06){
+      beer.style.marginTop = "170px";
+      beer.style.borderTop = "18px  solid white";
+    }
+    else if(BAC < 0.1){
+      beer.style.marginTop = "140px";
+      beer.style.borderTop = "28px  solid white";
+    }
+    else if(BAC < 0.2){
+      beer.style.marginTop = "90px";
+      beer.style.borderTop = "35px  solid white";
+    }
+    else if(BAC < 0.3){
+      beer.style.marginTop = "52px";
+      beer.style.borderTop = "40px  solid white";
+    }
+    else if(BAC < 0.4){
+      beer.style.marginTop = "24px";
+      beer.style.borderTop = "45px solid white";
+    }
+    else if(BAC < 0.5){
+      beer.style.marginTop = "0px";
+      beer.style.borderTop = "50px solid white";
+    }
+    // opozorimo uporabnika, da naj neha piti
     if(BAC > 0.2){
       console.log("Nehaj pit!");
       warning.style.display = "block";

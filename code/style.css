@@ -121,6 +121,10 @@ ul li.checked::before {
   background-color: #bbb;
 }
 
+.drinkingLi{
+  padding: 12px 8px 12px 7px;
+}
+
 /* Style the header */
 .header {
   background-color: #010101 ;
@@ -346,38 +350,73 @@ input {
   transform-origin: 0 0;
 }
 
-
-.container .borderbox .glass .inner .bubble:nth-child(1) {
+.container .borderbox .glass .inner .bubble{
   position: absolute;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.4);
   width: 10px;
   height: 10px;
   top: -10px; /* Set initial position above the container */
+}
+
+.container .borderbox .glass .inner .bubble:nth-child(1) {
   left: var(--position1, 1s);
   animation: bubbles var(--delay1, 1s) ease-in-out infinite;
 }
 
 .container .borderbox .glass .inner .bubble:nth-child(2) {
-  position: absolute;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.4);
-  width: 10px;
-  height: 10px;
-  top: -10px; /* Set initial position above the container */
   left: var(--position2, 1s);
   animation: bubbles var(--delay2, 1s) ease-in-out infinite;
 }
 
 .container .borderbox .glass .inner .bubble:nth-child(3) {
-  position: absolute;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.4);
-  width: 10px;
-  height: 10px;
-  top: -10px; /* Set initial position above the container */
   left: var(--position3, 1s);
   animation: bubbles var(--delay3, 1s) ease-in-out infinite;
+}
+
+.container .borderbox .glass .inner .bubble:nth-child(4) {
+  left: var(--position4, 1s);
+  animation: bubbles var(--delay4, 1s) ease-in-out infinite;
+}
+
+.container .borderbox .glass .inner .bubble:nth-child(5) {
+  left: var(--position5, 1s);
+  animation: bubbles var(--delay5, 1s) ease-in-out infinite;
+}
+
+.container .borderbox .glass .inner .bubble:nth-child(6) {
+  left: var(--position6, 1s);
+  animation: bubbles var(--delay6, 1s) ease-in-out infinite;
+}
+
+.container .borderbox .glass .inner .bubble:nth-child(7) {
+  left: var(--position7, 1s);
+  animation: bubbles var(--delay7, 1s) ease-in-out infinite;
+}
+
+.container .borderbox .glass .inner .bubble:nth-child(8) {
+  left: var(--position8, 1s);
+  animation: bubbles var(--delay8, 1s) ease-in-out infinite;
+}
+
+.container .borderbox .glass .inner .bubble:nth-child(9) {
+  left: var(--position9, 1s);
+  animation: bubbles var(--delay9, 1s) ease-in-out infinite;
+}
+
+.container .borderbox .glass .inner .bubble:nth-child(10) {
+  left: var(--position10, 1s);
+  animation: bubbles var(--delay10, 1s) ease-in-out infinite;
+}
+
+.container .borderbox .glass .inner .bubble:nth-child(11) {
+  left: var(--position11, 1s);
+  animation: bubbles var(--delay11, 1s) ease-in-out infinite;
+}
+
+.container .borderbox .glass .inner .bubble:nth-child(12) {
+  left: var(--position12, 1s);
+  animation: bubbles var(--delay12, 1s) ease-in-out infinite;
 }
 
 @keyframes bubbles {
