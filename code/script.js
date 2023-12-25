@@ -268,11 +268,114 @@ var drinkingWindow = document.getElementById("drink-window");
 
 const drinkingButtons = Array.from(document.getElementsByClassName('drinkBtn'));
 
+function updateBeer(){
+  //potrebujemo težo in spol uporabnika
+  var wAndG;
+  $.ajax({
+    url: "getWeightandGender.php",
+    type: "get",
+    async: false,  // Set to false for synchronous request
+    success: function(response) {
+        console.log(response);
+        if (response.length === 0) {
+          console.log("Ne deluva");
+        }
+        else {
+          console.log("weight: " + response.weight + ", gender: " + response.gender);
+          wAndG = response;
+      }
+    },
+    error: function(xhr) {
+        console.log("Error:", xhr);
+    }
+});
+let drinks = [];
+  $.ajax({
+    url: "getDrinks.php",
+    type: "get",
+    async: false,  // Set to false for synchronous request
+    data: { 
+        zur_id: global_zur_id
+    },
+    success: function(response) {
+      if (response.length === 0) {
+        console.log("No drinks found");
+      } 
+      else {
+        // .map() naredi novo tabelo na podlagi podane funkcije
+        drinks = response.map(function(obj) {
+          return {
+            kolicina: obj && obj.kolicina !== undefined ? obj.kolicina : null,
+            procenti: obj && obj.procenti !== undefined ? obj.procenti : null,
+            alkoholG: obj && obj.alkoholG !== undefined ? obj.alkoholG : null
+          };
+        });
+      }
+    },
+    error: function(xhr) {
+      console.log("Error:", xhr);
+    }
+});
+
+  console.log("weight2: " + wAndG.weight + ", gender2: " + wAndG.gender);
+  console.log(drinks);
+  drinks.forEach(function(drink) {
+    console.log("Kolicina: " + drink.kolicina + ", Procenti: " + drink.procenti + ", AlkoholG: " + drink.alkoholG);
+  });
+  var BAC = calculateBAC(drinks, wAndG);
+  console.log("BAC FINAL: "+BAC);
+  var warning = document.getElementById("warning");
+  // spremenimo nivo pive glede na BAC
+  var beer = document.getElementById("beer");
+  if(BAC == 0){
+    beer.style.marginTop = "260px";
+    beer.style.borderTop = "0px  solid white";
+  }
+  else if(BAC < 0.03){
+    beer.style.marginTop = "212px";
+    beer.style.borderTop = "8px  solid white";
+  }
+  else if(BAC < 0.06){
+    beer.style.marginTop = "170px";
+    beer.style.borderTop = "18px  solid white";
+  }
+  else if(BAC < 0.1){
+    beer.style.marginTop = "140px";
+    beer.style.borderTop = "28px  solid white";
+  }
+  else if(BAC < 0.2){
+    beer.style.marginTop = "90px";
+    beer.style.borderTop = "35px  solid white";
+  }
+  else if(BAC < 0.3){
+    beer.style.marginTop = "52px";
+    beer.style.borderTop = "40px  solid white";
+  }
+  else if(BAC < 0.4){
+    beer.style.marginTop = "24px";
+    beer.style.borderTop = "45px solid white";
+  }
+  else if(BAC < 0.5){
+    beer.style.marginTop = "0px";
+    beer.style.borderTop = "50px solid white";
+  }
+  // opozorimo uporabnika, da naj neha piti
+  if(BAC > 0.2){
+    console.log("Nehaj pit!");
+    warning.style.display = "block";
+  }
+  else{
+    warning.style.display = "none";
+  }
+}
+
 drinkingButtons.forEach(btn => {
   btn.addEventListener('click', function handleClick(event) {
     drinkingWindow.classList.toggle('show');
     global_zur_id = btn.getAttribute("id");
+    // posodobimo pivo
     console.log(global_zur_id);
+    updateBeer();
   });
 });
 var global_zur_id = -1;
