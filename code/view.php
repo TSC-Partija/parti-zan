@@ -79,6 +79,18 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
         <input type="number" id="size" placeholder="količina v litrih" maxlength="5" style="width: 100%; padding: 10px; margin-top: 10px;" onkeypress="handleKeyPressDrink(event)">
         <span onclick="newDrinkElement()" class="addBtn" style="width: 100%">Dodaj</span>
         <span id = "warning" class="fs-3 fw-bold">Približujete se meji razuma, PRENEHAJTE PITI!</span>
+        <div class="container">
+            <div class="borderbox">
+                <div class="glass">
+                <div class="inner">
+                    <?php $i = 0; ?>
+                    <?php while ($i++ < 12): ?>
+                    <div class="bubble"></div>
+                    <?php endwhile; ?>
+                </div>
+                </div>
+            </div>
+        </div>
         <ul id="drinkingUl" style="color:black">
         </ul>
         <span id="minister" class="fs-3 fw-bold">Minister za zdravje opozarja: Prekomerno pitje alkohola škoduje zdravju</span>

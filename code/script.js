@@ -349,6 +349,11 @@ document.addEventListener('DOMContentLoaded', function () {
       calendar.render();
     })
     .catch(error => console.error('Error fetching data:', error));
+  var bubbles = document.querySelectorAll(".container .borderbox .glass .inner .bubble");
+  bubbles.forEach(function (bubble, index) {
+    bubble.style.setProperty('--delay' + (index + 1), Math.random() * (10 + 0.2) +'s');
+    bubble.style.setProperty('--position' + (index + 1), Math.random() * (100 + 100) +'px');
+  });
 });
 
 function newShoppingElement() {
@@ -405,7 +410,6 @@ function calculateBAC(drinks, wAndG){
     //alcG = (drink.kolicina*1000) * (drink.procenti*100) * 0.789;
     var alcGram = drink.alkoholG;
     BAC += (alcGram / weightGram);
-    console.log("Kolicina: " + drink.kolicina + ", Procenti: " + drink.procenti + ", AlkoholG: " + drink.alkoholG);
   });
   BAC *= 100;
   console.log("BAC: "+BAC);
