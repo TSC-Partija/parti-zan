@@ -43,6 +43,8 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
         }
     </style>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <div id="myDIV" class="header">
@@ -61,7 +63,8 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
         </div>
     <?php endif; ?>
     <div id="shopping-window">
-        <h2 id="shopping-title" style="vertical-align: baseline">SHOPPING</h2><img src="images/shopping-cart.png" style="height:50px">
+        <h2 id="shopping-title" style="vertical-align: baseline">SHOPPING</h2>
+        <img src="images/shopping-cart.png" style="height:50px">
         <input type="text" id="shopping" placeholder="Izdelki..." maxlength="60" style="width: 100%" onkeypress="handleKeyPressShop(event)">
         <span onclick="newShoppingElement()" class="addBtn" style="width: 100%">Dodaj</span>
         <ul id="shoppingUl">
@@ -70,10 +73,15 @@ $_SESSION['expire_time'] = time() + $sess_expiration;
 
     <div id="drink-window">
         <h2 id="drink-title">DRINK</h2>
+        <img src="images/beer.svg" style="height:50px">
         <input type="text" id="drinking" placeholder="Pijače..." maxlength="60" style="width: 100%" onkeypress="handleKeyPressDrink(event)">
+        <input type="number" id="alcohol" placeholder="% alkohola" maxlength="5" style="width: 100%; padding: 10px; margin-top: 10px;" onkeypress="handleKeyPressDrink(event)">
+        <input type="number" id="size" placeholder="količina v litrih" maxlength="5" style="width: 100%; padding: 10px; margin-top: 10px;" onkeypress="handleKeyPressDrink(event)">
         <span onclick="newDrinkElement()" class="addBtn" style="width: 100%">Dodaj</span>
+        <span id = "warning" class="fs-3 fw-bold">Približujete se meji razuma, PRENEHAJTE PITI!</span>
         <ul id="drinkingUl" style="color:black">
         </ul>
+        <span id="minister" class="fs-3 fw-bold">Minister za zdravje opozarja: Prekomerno pitje alkohola škoduje zdravju</span>
         <?php
         //if (isset($_SESSION["data"]) && $_SESSION["data"] != NULL){
         //    echo ($_SESSION["data"]);

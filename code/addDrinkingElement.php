@@ -29,6 +29,10 @@ if ($data === null) {
 // Access the data fields
 $name = $data->name;
 $id = $data->id;
+$alc = $data->alc;
+$size = $data->size;
+$alcG = $data->alcG;
+
 if(isset($name) && $name != "" && isset($id) && $id != ""){
     // Create a new MySQLi object
     $servername = "localhost";
@@ -49,11 +53,11 @@ if(isset($name) && $name != "" && isset($id) && $id != ""){
 
     $intid = intval($id);
     $finished = 0;
-    $stmt = $conn->prepare("INSERT INTO `spil` (`id_pijanca`, `zur_id`, `datum`, `seznam`, `drink_date`) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO `spil` (`id_pijanca`, `zur_id`, `datum`, `seznam`, `kolicina`, `procenti`, `alkoholG`, `drink_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
     // date('Y-m-d H:i:s') --> potrebujemo čas, ko je uporabnik spil pijačo --> to je za izračun količine alkohola v krvi
     $current_time = date('Y-m-d H:i:s');
-    $stmt->bind_param("iiiss", $_SESSION["id"], $intid, $finished, $name, $current_time);
+    $stmt->bind_param("iiisdiis", $_SESSION["id"], $intid, $finished, $name, $size, $alc, $alcG, $current_time);
     $stmt->execute();
 
     if ($stmt->affected_rows > 0) {

@@ -390,9 +390,66 @@ function newShoppingElement() {
   }
 }
 
+function calculateBAC(drinks, wAndG){
+  var BAC = 0;
+  var r = 0;
+  if(wAndG.gender == 'M'){
+    r = 0.68;
+  }
+  else if(wAndG.gender == 'Z') {
+    r = 0.55;
+  }
+  // teža v gramih
+  var weightGram = wAndG.weight * 1000 * r;
+  drinks.forEach(function(drink) {
+    //alcG = (drink.kolicina*1000) * (drink.procenti*100) * 0.789;
+    var alcGram = drink.alkoholG;
+    BAC += (alcGram / weightGram);
+    console.log("Kolicina: " + drink.kolicina + ", Procenti: " + drink.procenti + ", AlkoholG: " + drink.alkoholG);
+  });
+  BAC *= 100;
+  console.log("BAC: "+BAC);
+  // odštejemo še čas med 1. in zadnjo pijačo
+  console.log(BAC);
+  var date_min = 0;
+  var date_max = 0;
+  $.ajax({
+    url: "getDrinkTimes.php",
+    type: "get",
+    async: false,  // Set to false for synchronous request
+    data: { 
+      zur_id: global_zur_id
+    },
+    success: function(response) {
+      if (response.length === 0) {
+        console.log("No drinks found");
+      } 
+      else {
+        console.log("min: "+response.min);
+        console.log("max: "+response.max);
+        date_min = response.min;
+        date_max = response.max;
+      }
+    },
+    error: function(xhr) {
+      console.log("Error:", xhr);
+    }
+  });
+  var timePassed = (new Date(date_max) - new Date(date_min)) / (1000 * 3600);
+
+  console.log("timePassed: "+timePassed);
+  timePassed = timePassed * 0.015;
+  console.log("timePassed2: "+timePassed);
+  BAC -= timePassed;
+  return BAC;
+}
+
 function newDrinkElement() {
   var li = document.createElement("li");
   var inputValue = document.getElementById("drinking").value;
+  var alcohol = document.getElementById("alcohol").value;
+  var size = document.getElementById("size").value;
+  var alcInGrams = ((size * 1000) * alcohol) / 100;
   var t = document.createTextNode(inputValue);
   li.appendChild(t);
   if (inputValue === '') {
@@ -403,8 +460,11 @@ function newDrinkElement() {
       document.getElementById("drinkingUl").appendChild(li);
       document.getElementById("drinking").value = "";
         let data = {
-            name: inputValue,
-            id: global_zur_id
+          name: inputValue,
+          id: global_zur_id,
+          alc: alcohol,
+          size: size,
+          alcG: alcInGrams
         }
 
         // Create a new XMLHttpRequest object
@@ -425,6 +485,71 @@ function newDrinkElement() {
 
         // Convert the data to a JSON string and send it to the server
         xhr.send(JSON.stringify(data));
+    }
+
+    //potrebujemo težo in spol uporabnika
+    var wAndG;
+    $.ajax({
+      url: "getWeightandGender.php",
+      type: "get",
+      async: false,  // Set to false for synchronous request
+      success: function(response) {
+          console.log(response);
+          if (response.length === 0) {
+            console.log("Ne deluva");
+          }
+          else {
+            console.log("weight: " + response.weight + ", gender: " + response.gender);
+            wAndG = response;
+        }
+      },
+      error: function(xhr) {
+          console.log("Error:", xhr);
+      }
+  });
+
+    // preverimo količino alkohola v krvi
+  // preberemo vse pijače iz baze
+  console.log("globalna: " + global_zur_id);
+  let drinks = [];
+    $.ajax({
+      url: "getDrinks.php",
+      type: "get",
+      async: false,  // Set to false for synchronous request
+      data: { 
+          zur_id: global_zur_id
+      },
+      success: function(response) {
+        if (response.length === 0) {
+          console.log("No drinks found");
+        } 
+        else {
+          // .map() naredi novo tabelo na podlagi podane funkcije
+          drinks = response.map(function(obj) {
+            return {
+              kolicina: obj && obj.kolicina !== undefined ? obj.kolicina : null,
+              procenti: obj && obj.procenti !== undefined ? obj.procenti : null,
+              alkoholG: obj && obj.alkoholG !== undefined ? obj.alkoholG : null
+            };
+          });
+        }
+      },
+      error: function(xhr) {
+        console.log("Error:", xhr);
+      }
+  });
+
+    console.log("weight2: " + wAndG.weight + ", gender2: " + wAndG.gender);
+    console.log(drinks);
+    drinks.forEach(function(drink) {
+      console.log("Kolicina: " + drink.kolicina + ", Procenti: " + drink.procenti + ", AlkoholG: " + drink.alkoholG);
+    });
+    var BAC = calculateBAC(drinks, wAndG);
+    console.log("BAC FINAL: "+BAC);
+    var warning = document.getElementById("warning");
+    if(BAC > 0.2){
+      console.log("Nehaj pit!");
+      warning.style.display = "block";
     }
   }
 }

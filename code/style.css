@@ -270,6 +270,15 @@ input {
   color: black;
 }
 
+#warning{
+  display: none;
+  color: #bf2126;
+}
+
+#minister{
+  color: black;
+}
+
 #taskDiv{
   background-color: #bf2126;
   padding: 30px 40px;
