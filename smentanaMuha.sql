@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gostitelj: 127.0.0.1
--- Čas nastanka: 24. dec 2023 ob 18.32
+-- Čas nastanka: 25. dec 2023 ob 18.58
 -- Različica strežnika: 10.4.28-MariaDB
 -- Različica PHP: 8.2.4
 
@@ -108,12 +108,21 @@ CREATE TABLE `spil` (
   `id_pijanca` int(11) NOT NULL,
   `datum` varchar(64) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `seznam` varchar(64) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `zur_id` int(11) NOT NULL
+  `kolicina` decimal(5,5) NOT NULL,
+  `procenti` int(3) NOT NULL,
+  `alkoholG` int(5) NOT NULL,
+  `zur_id` int(11) NOT NULL,
+  `drink_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Odloži podatke za tabelo `spil`
 --
+
+INSERT INTO `spil` (`id`, `id_pijanca`, `datum`, `seznam`, `kolicina`, `procenti`, `alkoholG`, `zur_id`, `drink_date`) VALUES
+(95, 2, '0', 'jegr', 0.05000, 4, 2, 43, '2023-12-25 18:55:08'),
+(96, 2, '0', 'vino', 0.20000, 12, 24, 43, '2023-12-25 18:55:20'),
+(97, 2, '0', 'pivo', 0.99999, 5, 100, 44, '2023-12-25 18:56:03');
 
 -- --------------------------------------------------------
 
@@ -137,14 +146,14 @@ CREATE TABLE `todo` (
 INSERT INTO `todo` (`id`, `owner`, `todo`, `finished`, `deadline`, `group_id`) VALUES
 (30, 2, 'TESTIS', 0, '2023-12-02T17:15', 1),
 (31, 100410, 'Naberi jagode', 1, '2024-01-18T04:45', 24871),
-(32, 2, 'buraz', 0, '2023-12-10T18:20', 1898),
 (33, 2, 'Zdravje Martionm', 1, '2023-02-02T17:30', 1),
-(34, 2, 'Danes je dan', 0, '2023-12-02T20:35', 1898),
 (36, 2, 'Janezove norcije', 0, '2023-12-02T08:40', 1),
 (38, 3, 'jaja', 1, '0', 24871),
 (39, 3, 'jajca', 1, '2023-12-06T15:03', 24871),
 (40, 3, 'jajcana kvadrat', 0, '2023-12-06T16:04', 24871),
-(41, 142833, 'majstr na oknu', 0, '2023-12-14T16:41', 24871);
+(41, 142833, 'majstr na oknu', 0, '2023-12-14T16:41', 24871),
+(43, 2, 'a', 0, '2023-12-25T15:44', 1),
+(44, 2, 'jabadabadu', 0, '2023-12-25T18:55', 1898);
 
 -- --------------------------------------------------------
 
@@ -263,13 +272,13 @@ ALTER TABLE `shopping`
 -- AUTO_INCREMENT tabele `spil`
 --
 ALTER TABLE `spil`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT tabele `todo`
 --
 ALTER TABLE `todo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT tabele `todo_group`
